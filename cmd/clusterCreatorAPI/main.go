@@ -1,4 +1,4 @@
-package main
+package clusterCreatorAPI
 
 import (
 	"os"
@@ -9,7 +9,6 @@ import (
 	"github.com/juju/loggo"
 	"github.com/alejandroEsc/k8s-provisioner-juju-example/internal/util"
 	"golang.org/x/net/context"
-	"github.com/alejandroEsc/k8s-provisioner-juju-example/internal/juju"
 
 )
 
@@ -40,8 +39,7 @@ func main() {
 
 func start(gracefulStop chan os.Signal) error {
 	viper.AutomaticEnv()
-	viper.SetEnvPrefix("kraken_cluster")
-
+	viper.SetEnvPrefix("samsung_cluster")
 
 
 	return nil

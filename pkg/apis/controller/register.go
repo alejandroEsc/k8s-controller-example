@@ -11,8 +11,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package samplecontroller
+package controller
 
 const (
-	GroupName = "alejandro.escobar.com"
+	GroupName = "controller.alejandro.esc.com"
 )
