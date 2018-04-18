@@ -21,15 +21,35 @@ set -o pipefail
 SCRIPT_ROOT=$(dirname ${BASH_SOURCE})/..
 CODEGEN_PKG=${CODEGEN_PKG:-$(cd ${SCRIPT_ROOT}; ls -d -1 ./vendor/k8s.io/code-generator 2>/dev/null || echo ../code-generator)}
 
-PKG_CLIENT="github.com/alejandroEsc/k8s-provisioner-juju-example/pkg/client"
-PKG_APIS="github.com/alejandroEsc/k8s-provisioner-juju-example/pkg/apis"
+PKG_DIR="github.com/alejandroEsc/k8s-provisioner-juju-example/pkg"
+PKG_REL="./pkg"
+PKG_CLIENT="${PKG_DIR}/client"
+PKG_APIS="${PKG_DIR}/apis"
 
-# generate the code with:
-# --output-base    because this script should also be able to run inside the vendor dir of
-#                  k8s.io/kubernetes. The output-base is needed for the generators to output into the vendor dir
-#                  instead of the $GOPATH directly. For normal projects this can be dropped.
-${CODEGEN_PKG}/generate-groups.sh "deepcopy,client,informer,lister" \
-  $PKG_CLIENT $PKG_APIS controller:v1alpha1 \
-  --output-base "$(dirname ${BASH_SOURCE})/../../.." \
-  --go-header-file ${SCRIPT_ROOT}/hack/boilerplate.go.txt
+# Deep gen, manually calling this works.
+echo "generationg deepcopy"
+${GOPATH}/bin/deepcopy-gen \
+--input-dirs "${PKG_APIS}/controller/v1alpha1" \
+-O zz_generated.deepcopy
 
+# client
+echo "generating client group"
+${GOPATH}/bin/client-gen \
+--clientset-name versioned \
+--input-base "${PKG_APIS}" \
+--input "controller/v1alpha1" \
+--output-package "${PKG_CLIENT}/clientset"
+
+# listers
+echo "generating listers group"
+${GOPATH}/bin/lister-gen \
+--input-dirs "${PKG_APIS}/controller/v1alpha1" \
+--output-package "${PKG_CLIENT}/listers"
+
+# informer
+echo "generating informers group"
+${GOPATH}/bin/informer-gen \
+--input-dirs "${PKG_APIS}/controller/v1alpha1" \
+--versioned-clientset-package ${PKG_CLIENT}/clientset/versioned \
+--listers-package "${PKG_CLIENT}/listers" \
+--output-package "${PKG_CLIENT}/informers"
