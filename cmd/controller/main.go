@@ -16,6 +16,7 @@ import (
 	kubeinformers "k8s.io/client-go/informers"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
+	"github.com/alejandroEsc/k8s-provisioner-juju-example/pkg/signals"
 )
 
 var (
@@ -24,8 +25,16 @@ var (
 	kubeconfig           string
 	workerThreads        int
 	err                  error
-	onlyOneSignalHandler = make(chan struct{})
 )
+
+// Init initializes the environment variables to be used by the app
+func Init() {
+	viper.AutomaticEnv()
+	viper.SetEnvPrefix("cluster_controller")
+	viper.BindEnv("kubeconfig")
+	viper.BindEnv("master_url")
+	viper.BindEnv("worker_thread_count")
+}
 
 func main() {
 	Init()
@@ -66,7 +75,7 @@ func main() {
 	gracefulStop := make(chan os.Signal)
 	signal.Notify(gracefulStop, syscall.SIGINT, syscall.SIGTERM)
 
-	if err := controller.Run(workerThreads, createGracefulStopCh()); err != nil {
+	if err := controller.Run(workerThreads, signals.CreateGracefulStopCh()); err != nil {
 		logger.Criticalf("failed to start server: %s", err)
 		os.Exit(1)
 	}
@@ -75,21 +84,4 @@ func main() {
 
 }
 
-// from https://github.com/kubernetes/sample-controller/tree/master/pkg/signals
-func createGracefulStopCh() (stopCh <-chan struct{}) {
-	close(onlyOneSignalHandler)
-	shutdownSignals := []os.Signal{os.Interrupt, syscall.SIGTERM, syscall.SIGINT}
 
-	stop := make(chan struct{})
-	c := make(chan os.Signal, 2)
-	signal.Notify(c, shutdownSignals...)
-	go func() {
-		<-c
-		close(stop)
-		<-c
-		os.Exit(1) // second signal. Exit directly.
-	}()
-
-	return stop
-
-}

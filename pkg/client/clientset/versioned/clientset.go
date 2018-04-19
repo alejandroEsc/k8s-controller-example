@@ -19,7 +19,7 @@ limitations under the License.
 package versioned
 
 import (
-	controllerv1alpha1 "github.com/alejandroesc/k8s-provisioner-juju-example/pkg/client/clientset/versioned/typed/controller/v1alpha1"
+	controllerv1alpha1 "github.com/alejandroEsc/k8s-provisioner-juju-example/pkg/client/clientset/versioned/typed/controller/v1alpha1"
 	glog "github.com/golang/glog"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"

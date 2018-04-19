@@ -20,8 +20,8 @@ package fake
 
 import (
 	clientset "github.com/alejandroEsc/k8s-provisioner-juju-example/pkg/client/clientset/versioned"
-	controllerv1alpha1 "github.com/alejandroesc/k8s-provisioner-juju-example/pkg/client/clientset/versioned/typed/controller/v1alpha1"
-	fakecontrollerv1alpha1 "github.com/alejandroesc/k8s-provisioner-juju-example/pkg/client/clientset/versioned/typed/controller/v1alpha1/fake"
+	controllerv1alpha1 "github.com/alejandroEsc/k8s-provisioner-juju-example/pkg/client/clientset/versioned/typed/controller/v1alpha1"
+	fakecontrollerv1alpha1 "github.com/alejandroEsc/k8s-provisioner-juju-example/pkg/client/clientset/versioned/typed/controller/v1alpha1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"
