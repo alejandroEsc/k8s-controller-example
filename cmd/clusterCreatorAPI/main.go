@@ -5,11 +5,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/spf13/viper"
-	"github.com/juju/loggo"
 	"github.com/alejandroEsc/k8s-provisioner-juju-example/internal/util"
+	"github.com/juju/loggo"
+	"github.com/spf13/viper"
 	"golang.org/x/net/context"
-
 )
 
 // Code for the Samsung-Cluster operator
@@ -17,7 +16,6 @@ import (
 func main() {
 	logger := util.GetModuleLogger("cmd", loggo.INFO)
 	logger.Infof("Starting Samsung-Cluster Operator...")
-
 
 	ctx := context.Background()
 	_, cancel := context.WithCancel(ctx)
@@ -33,14 +31,13 @@ func main() {
 		os.Exit(1)
 	}
 
-	logger.Infof("... Samsung-Cluster Operator stopped")
+	logger.Infof("... Kraken-Cluster API stopped")
 
 }
 
 func start(gracefulStop chan os.Signal) error {
 	viper.AutomaticEnv()
-	viper.SetEnvPrefix("samsung_cluster")
-
+	viper.SetEnvPrefix("kraken_cluster")
 
 	return nil
 }

@@ -12,7 +12,7 @@ type ClusterCreator struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec ClusterCreatorSpec `json:"spec"`
+	Spec   ClusterCreatorSpec   `json:"spec"`
 	Status ClusterCreatorStatus `json:"status"`
 }
 
