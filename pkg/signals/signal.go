@@ -4,8 +4,8 @@ import (
 	"os"
 	"os/signal"
 )
-var onlyOneSignalHandler = make(chan struct{})
 
+var onlyOneSignalHandler = make(chan struct{})
 
 // from https://github.com/kubernetes/sample-controller/tree/master/pkg/signals
 func CreateGracefulStopCh() (stopCh <-chan struct{}) {

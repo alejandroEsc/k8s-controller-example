@@ -2,8 +2,6 @@ package main
 
 import (
 	"os"
-	"os/signal"
-	"syscall"
 	"time"
 
 	c "github.com/alejandroEsc/k8s-provisioner-juju-example/internal/controller"
@@ -12,7 +10,6 @@ import (
 	informers "github.com/alejandroEsc/k8s-provisioner-juju-example/pkg/client/informers/externalversions"
 	"github.com/juju/loggo"
 	"github.com/spf13/viper"
-	"golang.org/x/net/context"
 	kubeinformers "k8s.io/client-go/informers"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
@@ -66,16 +63,13 @@ func main() {
 
 	controller := c.NewController(kubeClient, client, kubeInformerFactory, exampleInformerFactory)
 
-	ctx := context.Background()
-	_, cancel := context.WithCancel(ctx)
-	defer cancel()
+	stopCh := signals.CreateGracefulStopCh()
 
-	//  Get notified that server is being asked to stop
-	// Handle SIGINT and SIGTERM.
-	gracefulStop := make(chan os.Signal)
-	signal.Notify(gracefulStop, syscall.SIGINT, syscall.SIGTERM)
+	go kubeInformerFactory.Start(stopCh)
+	go exampleInformerFactory.Start(stopCh)
 
-	if err := controller.Run(workerThreads, signals.CreateGracefulStopCh()); err != nil {
+
+	if err := controller.Run(workerThreads, stopCh); err != nil {
 		logger.Criticalf("failed to start server: %s", err)
 		os.Exit(1)
 	}
