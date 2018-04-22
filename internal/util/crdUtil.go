@@ -2,7 +2,7 @@ package util
 
 /**
 taken from gitlab/mvenezia/redis-operator
- */
+*/
 
 import (
 	"fmt"
@@ -13,11 +13,9 @@ import (
 
 	apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
-
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
-
 
 // NewCRD creates crd apixextension object to be consumed by k8s api
 func NewCRD(
@@ -32,22 +30,21 @@ func NewCRD(
 		ObjectMeta: metav1.ObjectMeta{
 			Name: name,
 		},
-		Spec: apiextensionsv1beta1.CustomResourceDefinitionSpec {
+		Spec: apiextensionsv1beta1.CustomResourceDefinitionSpec{
 			Group:   api.SchemeGroupVersion.Group,
 			Version: api.SchemeGroupVersion.Version,
 			Scope:   apiextensionsv1beta1.NamespaceScoped,
 			Names: apiextensionsv1beta1.CustomResourceDefinitionNames{
-				Plural: plural,
-				Kind:   kind,
+				Plural:     plural,
+				Kind:       kind,
 				ShortNames: shortNames,
-				Singular: singular,
+				Singular:   singular,
 			},
 			Subresources: subResource,
-			Validation: validation,
+			Validation:   validation,
 		},
 	}
 }
-
 
 // DeployCRD creates the objects in kubernetes
 func DeployCRD(clientset apiextensionsclient.Interface, crd *apiextensionsv1beta1.CustomResourceDefinition) error {
@@ -55,12 +52,11 @@ func DeployCRD(clientset apiextensionsclient.Interface, crd *apiextensionsv1beta
 	crdExists := k8serrors.IsAlreadyExists(err)
 	if err != nil && !crdExists {
 		return err
-	} else if crdExists{
+	} else if crdExists {
 		log.Print("CRD already exists, skipping installation\n")
 	}
 	return nil
 }
-
 
 // WaitCRDDeployReady waits until proper condition is obtained.
 func WaitCRDDeployReady(clientset apiextensionsclient.Interface, crdName string) error {

@@ -12,6 +12,8 @@ import (
 	"github.com/juju/loggo"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
+	apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/runtime"
 	"k8s.io/apimachinery/pkg/util/wait"
@@ -23,8 +25,6 @@ import (
 	"k8s.io/client-go/tools/cache"
 	"k8s.io/client-go/tools/record"
 	"k8s.io/client-go/util/workqueue"
-	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
-	apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 )
 
 // Code for the Samsung-Cluster operator
@@ -287,7 +287,6 @@ func (c *Controller) handleObject(obj interface{}) {
 		return
 	}
 }
-
 
 // InitCRD creates crd objects.
 func (c *Controller) InitCRD(apiExtClientset apiextensionsclient.Interface, crd *apiextensionsv1beta1.CustomResourceDefinition) error {

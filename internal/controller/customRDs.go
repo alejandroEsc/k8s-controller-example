@@ -18,7 +18,7 @@ func CreateClusterCreatorRD() *apiextensionsv1beta1.CustomResourceDefinition {
 		"ClusterCreator",
 		"clustercreator",
 		"clustercreators",
-		[]string {"cc"},
+		[]string{"cc"},
 		&subResource,
 		validation)
 }

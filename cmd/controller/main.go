@@ -8,21 +8,21 @@ import (
 	"github.com/alejandroEsc/k8s-provisioner-juju-example/internal/util"
 	clientset "github.com/alejandroEsc/k8s-provisioner-juju-example/pkg/client/clientset/versioned"
 	informers "github.com/alejandroEsc/k8s-provisioner-juju-example/pkg/client/informers/externalversions"
+	"github.com/alejandroEsc/k8s-provisioner-juju-example/pkg/signals"
 	"github.com/juju/loggo"
 	"github.com/spf13/viper"
+	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	kubeinformers "k8s.io/client-go/informers"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
-	"github.com/alejandroEsc/k8s-provisioner-juju-example/pkg/signals"
-	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 )
 
 var (
-	logger               loggo.Logger
-	masterURL            string
-	kubeconfig           string
-	workerThreads        int
-	err                  error
+	logger        loggo.Logger
+	masterURL     string
+	kubeconfig    string
+	workerThreads int
+	err           error
 )
 
 // Init initializes the environment variables to be used by the app
@@ -89,4 +89,3 @@ func logCriticalErrorAndExit(msg string, args ...interface{}) {
 	logger.Criticalf(msg, args)
 	os.Exit(1)
 }
-

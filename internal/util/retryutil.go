@@ -15,8 +15,8 @@
 package util
 
 import (
-"fmt"
-"time"
+	"fmt"
+	"time"
 )
 
 // RetryError object
