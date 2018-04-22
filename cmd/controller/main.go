@@ -14,6 +14,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	"github.com/alejandroEsc/k8s-provisioner-juju-example/pkg/signals"
+	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 )
 
 var (
@@ -45,17 +46,17 @@ func main() {
 
 	cfg, err := clientcmd.BuildConfigFromFlags(masterURL, kubeconfig)
 	if err != nil {
-		logger.Criticalf("Error building kubeconfig: %s", err.Error())
+		logger.Criticalf("Error building kubeconfig: %s", err)
 	}
 
 	kubeClient, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
-		logger.Criticalf("Error building kubernetes clientset: %s", err.Error())
+		logger.Criticalf("Error building kubernetes clientset: %s", err)
 	}
 
 	client, err := clientset.NewForConfig(cfg)
 	if err != nil {
-		logger.Criticalf("Error building example clientset: %s", err.Error())
+		logger.Criticalf("Error building example clientset: %s", err)
 	}
 
 	kubeInformerFactory := kubeinformers.NewSharedInformerFactory(kubeClient, time.Second*30)
@@ -68,14 +69,24 @@ func main() {
 	go kubeInformerFactory.Start(stopCh)
 	go exampleInformerFactory.Start(stopCh)
 
+	kubeExtClient := apiextensionsclient.NewForConfigOrDie(cfg)
 
+	err = controller.InitCRD(kubeExtClient, c.CreateClusterCreatorRD())
+	if err != nil {
+		logger.Criticalf("Error create CRD: %s", err)
+	}
+
+	// start controller
 	if err := controller.Run(workerThreads, stopCh); err != nil {
-		logger.Criticalf("failed to start server: %s", err)
-		os.Exit(1)
+		logCriticalErrorAndExit("failed to start server: %s", err)
 	}
 
 	logger.Infof("... Cluster-Controller Operator stopped")
 
 }
 
+func logCriticalErrorAndExit(msg string, args ...interface{}) {
+	logger.Criticalf(msg, args)
+	os.Exit(1)
+}
 

@@ -15,8 +15,8 @@ spec:
   subresources:
       status: {}
   openAPIV3Schema:
-        properties:
-          spec:
-            properties:
-              clusterName:
-                type: String
+      properties:
+        spec:
+          properties:
+            clusterName:
+              type: String
