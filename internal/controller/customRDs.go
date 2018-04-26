@@ -14,10 +14,10 @@ func CreateClusterCreatorRD() *apiextensionsv1beta1.CustomResourceDefinition {
 	var validation *apiextensionsv1beta1.CustomResourceValidation = nil
 
 	return util.NewCRD(
-		"clustercreators.alejandroesc.com",
-		"ClusterCreator",
-		"clustercreator",
-		"clustercreators",
+		"controller.alejandroesc.com",
+		"SampleController",
+		"podcontroller",
+		"podcontrollers",
 		[]string{"cc"},
 		&subResource,
 		validation)

@@ -2,24 +2,39 @@ syntax = "proto3";
 package pod;
 
 // additional imports for restulf-gateway code
-import "google/api/annotations.proto";
 import "protoc-gen-swagger/options/annotations.proto";
 
 
 service PodMessagingService {
 
-    rpc Health() returns (HealthReply){
-        option (google.api.http) = {
-            post: "/health"
-            body: "*"
-        };
-    }
-
+    /**
+    * health status
+    */
+    rpc Health(HealthStatusRequest) returns (HealthStatus) {}
+    rpc podInfo(PodInfoRequest) returns (PodInfo) {}
 }
 
 
-message HealthReply {
+/**
+* Request for pod info
+*/
+message PodInfoRequest {}
 
-    bool isOK = 1;
+/**
+* Return for pod info request
+*/
+message PodInfo {
+    string ID = 1;
+}
 
+/**
+* Request for health status
+*/
+message HealthStatusRequest {}
+
+/**
+* Replies on health
+*/
+message HealthStatus {
+    bool isOK = 1; // isOK is true if healthy
 }

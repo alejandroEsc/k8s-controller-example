@@ -6,7 +6,6 @@ taken from gitlab/mvenezia/redis-operator
 
 import (
 	"fmt"
-	"log"
 	"time"
 
 	api "github.com/alejandroEsc/k8s-controller-example/pkg/apis/controller/v1alpha1"
@@ -17,7 +16,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// NewCRD creates crd apixextension object to be consumed by k8s api
+// NewCRD creates crd api-extension object to be consumed by k8s api
 func NewCRD(
 	name string,
 	kind string,
@@ -53,7 +52,7 @@ func DeployCRD(clientset apiextensionsclient.Interface, crd *apiextensionsv1beta
 	if err != nil && !crdExists {
 		return err
 	} else if crdExists {
-		log.Print("CRD already exists, skipping installation\n")
+		logger.Infof("CRD already exists, skipping installation")
 	}
 	return nil
 }
@@ -73,6 +72,7 @@ func WaitCRDDeployReady(clientset apiextensionsclient.Interface, crdName string)
 				}
 			case apiextensionsv1beta1.NamesAccepted:
 				if cond.Status == apiextensionsv1beta1.ConditionFalse {
+					logger.Errorf("Name conflict: %v", cond.Reason)
 					return false, fmt.Errorf("Name conflict: %v", cond.Reason)
 				}
 			}
@@ -80,6 +80,7 @@ func WaitCRDDeployReady(clientset apiextensionsclient.Interface, crdName string)
 		return false, nil
 	})
 	if err != nil {
+		logger.Errorf("wait CRD created failed: %v", err)
 		return fmt.Errorf("wait CRD created failed: %v", err)
 	}
 	return nil

@@ -28,7 +28,7 @@ var (
 // Init initializes the environment variables to be used by the app
 func Init() {
 	viper.AutomaticEnv()
-	viper.SetEnvPrefix("cluster_controller")
+	viper.SetEnvPrefix("sample_controller")
 	viper.BindEnv("kubeconfig")
 	viper.BindEnv("master_url")
 	viper.BindEnv("worker_thread_count")
@@ -42,7 +42,7 @@ func main() {
 	workerThreads = viper.GetInt("worker_thread_count")
 
 	logger = util.GetModuleLogger("cmd.controller", loggo.INFO)
-	logger.Infof("Starting Cluster-Controller Operator...")
+	logger.Infof("Starting Sample-Controller Operator...")
 
 	cfg, err := clientcmd.BuildConfigFromFlags(masterURL, kubeconfig)
 	if err != nil {
@@ -81,7 +81,7 @@ func main() {
 		logCriticalErrorAndExit("failed to start server: %s", err)
 	}
 
-	logger.Infof("... Cluster-Controller Operator stopped")
+	logger.Infof("... Sample-Controller Operator stopped")
 
 }
 

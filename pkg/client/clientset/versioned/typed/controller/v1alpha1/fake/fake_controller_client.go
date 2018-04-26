@@ -18,7 +18,7 @@ limitations under the License.
 package fake
 
 import (
-	v1alpha1 "github.com/alejandroesc/k8s-controller-example/pkg/client/clientset/versioned/typed/controller/v1alpha1"
+	v1alpha1 "github.com/alejandroEsc/k8s-controller-example/pkg/client/clientset/versioned/typed/controller/v1alpha1"
 	rest "k8s.io/client-go/rest"
 	testing "k8s.io/client-go/testing"
 )
