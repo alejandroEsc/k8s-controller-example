@@ -17,7 +17,7 @@ if [[ ! -x "${goimports}" ]]; then
   exit 1
 fi
 
-source "${ROOT}/hack/common.sh"
+source "${ROOT}/scripts/common.sh"
 
 errors=$( echo `packages` | xargs ${goimports} -d 2>&1) || true
 if [[ -n "${errors}" ]]; then

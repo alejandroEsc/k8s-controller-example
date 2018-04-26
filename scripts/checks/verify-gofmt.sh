@@ -16,7 +16,7 @@ if [[ ! -x "${gofmt}" ]]; then
   exit 1
 fi
 
-source "${ROOT}/hack/common.sh"
+source "${ROOT}/scripts/common.sh"
 
 # gofmt exits with non-zero exit code if it finds a problem unrelated to
 # formatting (e.g., a file does not parse correctly). Without "|| true" this

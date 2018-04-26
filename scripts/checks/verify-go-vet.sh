@@ -10,7 +10,7 @@ ROOT=$(dirname "${BASH_SOURCE}")/../..
 
 cd "${ROOT}"
 
-source "${ROOT}/hack/common.sh"
+source "${ROOT}/scripts/common.sh"
 
 # gofmt exits with non-zero exit code if it finds a problem unrelated to
 # formatting (e.g., a file does not parse correctly). Without "|| true" this

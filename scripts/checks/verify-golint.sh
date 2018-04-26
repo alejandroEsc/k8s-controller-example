@@ -16,7 +16,7 @@ if [[ ! -x "${golint}" ]]; then
   exit 1
 fi
 
-source "${ROOT}/hack/common.sh"
+source "${ROOT}/scripts/common.sh"
 
 for gofile in $(valid_go_files); do
   golint -set_exit_status "$gofile"

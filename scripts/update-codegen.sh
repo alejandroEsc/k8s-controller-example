@@ -1,19 +1,5 @@
 #!/bin/bash
 
-# Copyright 2017 The Kubernetes Authors.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -25,28 +11,52 @@ PKG_APIS="${PKG_DIR}/apis"
 
 # Deep gen, manually calling this works.
 echo "generationg deepcopy"
+if [ ! -e ${GOPATH}/bin/deepcopy-gen ]; then
+    echo "installing deepcopy-gen tool"
+    cd ${SCRIPT_ROOT}
+    go install ${SCRIPT_ROOT}/vendor/k8s.io/code-generator/cmd/deepcopy-gen
+fi
 ${GOPATH}/bin/deepcopy-gen \
 --input-dirs "${PKG_APIS}/controller/v1alpha1" \
+--go-header-file ${SCRIPT_ROOT}/scripts/boilerplate.go.txt \
 -O zz_generated.deepcopy
 
 # client
 echo "generating client group"
+if [ ! -e ${GOPATH}/bin/client-gen ]; then
+    echo "installing client-gen tool"
+    cd ${SCRIPT_ROOT}
+    go install ${SCRIPT_ROOT}/vendor/k8s.io/code-generator/cmd/client-gen
+fi
 ${GOPATH}/bin/client-gen \
 --clientset-name versioned \
 --input-base "${PKG_APIS}" \
 --input "controller/v1alpha1" \
+--go-header-file ${SCRIPT_ROOT}/scripts/boilerplate.go.txt \
 --output-package "${PKG_CLIENT}/clientset"
 
 # listers
 echo "generating listers group"
+if [ ! -e ${GOPATH}/bin/lister-gen ]; then
+    echo "installing lister-gen tool"
+    cd ${SCRIPT_ROOT}
+    go install ${SCRIPT_ROOT}/vendor/k8s.io/code-generator/cmd/lister-gen
+fi
 ${GOPATH}/bin/lister-gen \
 --input-dirs "${PKG_APIS}/controller/v1alpha1" \
+--go-header-file ${SCRIPT_ROOT}/scripts/boilerplate.go.txt \
 --output-package "${PKG_CLIENT}/listers"
 
 # informer
 echo "generating informers group"
+if [ ! -e ${GOPATH}/bin/informer-gen ]; then
+    echo "installing informer-gen tool"
+    cd ${SCRIPT_ROOT}
+    go install ${SCRIPT_ROOT}/vendor/k8s.io/code-generator/cmd/informer-gen
+fi
 ${GOPATH}/bin/informer-gen \
 --input-dirs "${PKG_APIS}/controller/v1alpha1" \
 --versioned-clientset-package ${PKG_CLIENT}/clientset/versioned \
 --listers-package "${PKG_CLIENT}/listers" \
+--go-header-file ${SCRIPT_ROOT}/scripts/boilerplate.go.txt \
 --output-package "${PKG_CLIENT}/informers"

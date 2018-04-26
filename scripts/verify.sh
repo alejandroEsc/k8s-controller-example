@@ -45,11 +45,11 @@ fi
 
 
 ret=0
-run-check "${ROOT}/hack/checks/verify-go-vet.sh" bash
-run-check "${ROOT}/hack/checks/verify-gofmt.sh" bash
-run-check "${ROOT}/hack/checks/verify-goimports.sh" bash
-run-check "${ROOT}/hack/checks/verify-golint.sh" bash
-run-check "${ROOT}/hack/checks/verify-gocyclo.sh" bash
+run-check "${ROOT}/scripts/checks/verify-go-vet.sh" bash
+run-check "${ROOT}/scripts/checks/verify-gofmt.sh" bash
+run-check "${ROOT}/scripts/checks/verify-goimports.sh" bash
+run-check "${ROOT}/scripts/checks/verify-golint.sh" bash
+run-check "${ROOT}/scripts/checks/verify-gocyclo.sh" bash
 
 
 if [[ ${ret} -eq 1 ]]; then
