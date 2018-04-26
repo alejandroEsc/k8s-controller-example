@@ -18,7 +18,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	"github.com/alejandroEsc/k8s-provisioner-juju-example/pkg/apis/controller"
+	"github.com/alejandroEsc/k8s-controller-example/pkg/apis/controller"
 )
 
 // SchemeGroupVersion is group version used to register these objects

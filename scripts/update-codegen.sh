@@ -4,7 +4,8 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-PKG_DIR="github.com/alejandroEsc/k8s-provisioner-juju-example/pkg"
+SCRIPT_ROOT=$(dirname ${BASH_SOURCE})/..
+PKG_DIR="github.com/alejandroEsc/k8s-controller-example/pkg"
 PKG_REL="./pkg"
 PKG_CLIENT="${PKG_DIR}/client"
 PKG_APIS="${PKG_DIR}/apis"

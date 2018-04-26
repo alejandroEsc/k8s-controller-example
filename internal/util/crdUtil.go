@@ -9,7 +9,7 @@ import (
 	"log"
 	"time"
 
-	api "github.com/alejandroEsc/k8s-provisioner-juju-example/pkg/apis/controller/v1alpha1"
+	api "github.com/alejandroEsc/k8s-controller-example/pkg/apis/controller/v1alpha1"
 
 	apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"

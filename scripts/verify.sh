@@ -4,7 +4,7 @@ set -o nounset
 set -o pipefail
 
 ROOT=$(dirname "${BASH_SOURCE}")/..
-source "${ROOT}/hack/common.sh"
+source "${ROOT}/scripts/common.sh"
 
 
 # Collect Failed tests in this Array , initialize to nil

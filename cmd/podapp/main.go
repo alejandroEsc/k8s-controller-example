@@ -5,7 +5,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/alejandroEsc/k8s-provisioner-juju-example/internal/util"
+	"github.com/alejandroEsc/k8s-controller-example/internal/util"
 	"github.com/juju/loggo"
 	"github.com/spf13/viper"
 	"golang.org/x/net/context"
