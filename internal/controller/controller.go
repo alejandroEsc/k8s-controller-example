@@ -27,8 +27,6 @@ import (
 	"k8s.io/client-go/util/workqueue"
 )
 
-// Code for the Samsung-Cluster operator
-
 var (
 	logger = util.GetModuleLogger("internal.controller", loggo.INFO)
 )

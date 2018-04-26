@@ -11,11 +11,11 @@ import (
 	"golang.org/x/net/context"
 )
 
-// Code for the Samsung-Cluster operator
+// Code for pod app (grpc server)
 
 func main() {
 	logger := util.GetModuleLogger("cmd", loggo.INFO)
-	logger.Infof("Starting Samsung-Cluster Operator...")
+	logger.Infof("Starting Example Pod Operator...")
 
 	ctx := context.Background()
 	_, cancel := context.WithCancel(ctx)
@@ -31,7 +31,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	logger.Infof("... Kraken-Cluster API stopped")
+	logger.Infof("... Example Pod API stopped")
 
 }
 

@@ -1,0 +1,12 @@
+name:controller-example # must match the artifact name & the subdirectory 'zabra' must also match)
+version: ${CHART_VER}-${CHART_REL}
+description: Sample chart template for registry
+keywords:
+- kubernetes
+- controller
+home: https://github.com/alejandroEsc/k8s-controller-example
+sources:
+- https://github.com/alejandroEsc/k8s-controller-example
+maintainers:
+- name: alejandroEsc
+engine: gotpl
