@@ -9,12 +9,12 @@ import (
 	"fmt"
 
 	podapi "github.com/alejandroEsc/k8s-controller-example/api"
+	"github.com/alejandroEsc/k8s-controller-example/internal/podServer"
 	"github.com/alejandroEsc/k8s-controller-example/pkg/util"
 	"github.com/juju/loggo"
 	"github.com/spf13/viper"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
-	"github.com/alejandroEsc/k8s-controller-example/internal/podServer"
 )
 
 // Code for pod app (grpc server)
@@ -90,6 +90,6 @@ func start(gracefulStop chan os.Signal, port int, address string) error {
 	return nil
 }
 
-func cleanup(){
+func cleanup() {
 	logger.Infof("...cleaning up.")
 }

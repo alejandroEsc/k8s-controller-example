@@ -71,7 +71,7 @@ func main() {
 
 	kubeExtClient := apiextensionsclient.NewForConfigOrDie(cfg)
 
-	err = controller.InitCRD(kubeExtClient, c.CreateClusterCreatorRD())
+	err = controller.InitCRD(kubeExtClient, c.CreateControllerResource())
 	if err != nil {
 		logger.Criticalf("Error create CRD: %s", err)
 	}

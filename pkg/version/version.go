@@ -24,7 +24,7 @@ import (
 
 var (
 	logger = util.GetModuleLogger("pkg.util", loggo.INFO)
-	// The GitSha of the current commit (automatically set at compile time)
+	// GitSha is of the current commit (automatically set at compile time)
 	GitSha string
 
 	// The Version of the program from the VERSION file (automatically set at compile time)

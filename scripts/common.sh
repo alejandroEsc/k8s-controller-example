@@ -22,7 +22,7 @@ function inf {
 }
 
 packages() {
-  echo "./cmd/controller ./cmd/clusterCreatorAPI ./pkg/apis/controller/v1alpha1 ./internal/controller ./internal/util"
+  echo "./cmd/controller ./cmd/podapp ./pkg/apis/controller/v1alpha1 ./internal/controller ./internal/podServer"
 }
 
 valid_go_files() {

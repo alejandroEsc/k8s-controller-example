@@ -17,7 +17,7 @@ compile-pod-server:
 compile-pod-server-linux:
 	${GOBUILD_POD_SERVER} -o bin/linux-amd64 ./cmd/podapp
 
-go-checks:
+go-lint-checks:
 	./scripts/verify.sh
 
 go-clean:

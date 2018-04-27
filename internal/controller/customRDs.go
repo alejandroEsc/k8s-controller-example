@@ -5,13 +5,14 @@ import (
 	apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 )
 
-func CreateClusterCreatorRD() *apiextensionsv1beta1.CustomResourceDefinition {
+// CreateControllerResource creates the resource object to be consumed by kubernetes
+func CreateControllerResource() *apiextensionsv1beta1.CustomResourceDefinition {
 	subResource := apiextensionsv1beta1.CustomResourceSubresources{
 		Status: &apiextensionsv1beta1.CustomResourceSubresourceStatus{},
 	}
 
 	// No validation yet.
-	var validation *apiextensionsv1beta1.CustomResourceValidation = nil
+	var validation *apiextensionsv1beta1.CustomResourceValidation
 
 	return util.NewCRD(
 		"controller.alejandroesc.com",
