@@ -44,11 +44,7 @@
   name = "github.com/golang/protobuf"
   packages = [
     "proto",
-    "protoc-gen-go",
     "protoc-gen-go/descriptor",
-    "protoc-gen-go/generator",
-    "protoc-gen-go/grpc",
-    "protoc-gen-go/plugin",
     "ptypes",
     "ptypes/any",
     "ptypes/duration",
@@ -74,20 +70,10 @@
   version = "v0.1.0"
 
 [[projects]]
+  branch = "master"
   name = "github.com/grpc-ecosystem/grpc-gateway"
-  packages = [
-    "protoc-gen-grpc-gateway",
-    "protoc-gen-grpc-gateway/descriptor",
-    "protoc-gen-grpc-gateway/generator",
-    "protoc-gen-grpc-gateway/gengateway",
-    "protoc-gen-grpc-gateway/httprule",
-    "protoc-gen-swagger",
-    "protoc-gen-swagger/genswagger",
-    "protoc-gen-swagger/options",
-    "utilities"
-  ]
-  revision = "07f5e79768022f9a3265235f0db4ac8c3f675fec"
-  version = "v1.3.1"
+  packages = ["protoc-gen-swagger/options"]
+  revision = "c1e40d01152137a7183215c53dc68ce985f71865"
 
 [[projects]]
   branch = "master"
@@ -217,7 +203,9 @@
     "http2",
     "http2/hpack",
     "idna",
-    "lex/httplex"
+    "internal/timeseries",
+    "lex/httplex",
+    "trace"
   ]
   revision = "84348c2dc81a524fe94aaea3e3d9f967135338ef"
 
@@ -270,8 +258,38 @@
 [[projects]]
   branch = "master"
   name = "google.golang.org/genproto"
-  packages = ["googleapis/api/annotations"]
+  packages = ["googleapis/rpc/status"]
   revision = "7fd901a49ba6a7f87732eb344f6e3c5b19d1b200"
+
+[[projects]]
+  name = "google.golang.org/grpc"
+  packages = [
+    ".",
+    "balancer",
+    "balancer/base",
+    "balancer/roundrobin",
+    "codes",
+    "connectivity",
+    "credentials",
+    "encoding",
+    "encoding/proto",
+    "grpclb/grpc_lb_v1/messages",
+    "grpclog",
+    "internal",
+    "keepalive",
+    "metadata",
+    "naming",
+    "peer",
+    "resolver",
+    "resolver/dns",
+    "resolver/passthrough",
+    "stats",
+    "status",
+    "tap",
+    "transport"
+  ]
+  revision = "d11072e7ca9811b1100b80ca0269ac831f06d024"
+  version = "v1.11.3"
 
 [[projects]]
   name = "gopkg.in/inf.v0"
@@ -561,6 +579,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "7e574fe70c193205db5c8d81a39d6b69275b5940bd85ad94cad24d8dd37e69f7"
+  inputs-digest = "206d96606db07a22866a43d96365220f72d8fa0a2b9daeda263d016d2f624215"
   solver-name = "gps-cdcl"
   solver-version = 1

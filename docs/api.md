@@ -17,10 +17,21 @@
     - [JSONSchema](#grpc.gateway.protoc_gen_swagger.options.JSONSchema)
     - [Operation](#grpc.gateway.protoc_gen_swagger.options.Operation)
     - [Schema](#grpc.gateway.protoc_gen_swagger.options.Schema)
+    - [Scopes](#grpc.gateway.protoc_gen_swagger.options.Scopes)
+    - [Scopes.ScopeEntry](#grpc.gateway.protoc_gen_swagger.options.Scopes.ScopeEntry)
+    - [SecurityDefinitions](#grpc.gateway.protoc_gen_swagger.options.SecurityDefinitions)
+    - [SecurityDefinitions.SecurityEntry](#grpc.gateway.protoc_gen_swagger.options.SecurityDefinitions.SecurityEntry)
+    - [SecurityRequirement](#grpc.gateway.protoc_gen_swagger.options.SecurityRequirement)
+    - [SecurityRequirement.SecurityRequirementEntry](#grpc.gateway.protoc_gen_swagger.options.SecurityRequirement.SecurityRequirementEntry)
+    - [SecurityRequirement.SecurityRequirementValue](#grpc.gateway.protoc_gen_swagger.options.SecurityRequirement.SecurityRequirementValue)
+    - [SecurityScheme](#grpc.gateway.protoc_gen_swagger.options.SecurityScheme)
     - [Swagger](#grpc.gateway.protoc_gen_swagger.options.Swagger)
     - [Tag](#grpc.gateway.protoc_gen_swagger.options.Tag)
   
     - [JSONSchema.JSONSchemaSimpleTypes](#grpc.gateway.protoc_gen_swagger.options.JSONSchema.JSONSchemaSimpleTypes)
+    - [SecurityScheme.Flow](#grpc.gateway.protoc_gen_swagger.options.SecurityScheme.Flow)
+    - [SecurityScheme.In](#grpc.gateway.protoc_gen_swagger.options.SecurityScheme.In)
+    - [SecurityScheme.Type](#grpc.gateway.protoc_gen_swagger.options.SecurityScheme.Type)
     - [Swagger.SwaggerScheme](#grpc.gateway.protoc_gen_swagger.options.Swagger.SwaggerScheme)
   
   
@@ -342,6 +353,7 @@ TODO(ivucica): document fields
 | produces | [string](#string) | repeated |  |
 | schemes | [string](#string) | repeated |  |
 | deprecated | [bool](#bool) |  |  |
+| security | [SecurityRequirement](#grpc.gateway.protoc_gen_swagger.options.SecurityRequirement) | repeated |  |
 
 
 
@@ -371,6 +383,179 @@ TODO(ivucica): document fields
 
 
 
+<a name="grpc.gateway.protoc_gen_swagger.options.Scopes"/>
+
+### Scopes
+`Scopes` is a representation of OpenAPI v2 specification&#39;s Scopes object.
+
+See: https://github.com/OAI/OpenAPI-Specification/blob/3.0.0/versions/2.0.md#scopesObject
+
+Lists the available scopes for an OAuth2 security scheme.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| scope | [Scopes.ScopeEntry](#grpc.gateway.protoc_gen_swagger.options.Scopes.ScopeEntry) | repeated | Maps between a name of a scope to a short description of it (as the value of the property). |
+
+
+
+
+
+
+<a name="grpc.gateway.protoc_gen_swagger.options.Scopes.ScopeEntry"/>
+
+### Scopes.ScopeEntry
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [string](#string) |  |  |
+| value | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="grpc.gateway.protoc_gen_swagger.options.SecurityDefinitions"/>
+
+### SecurityDefinitions
+`SecurityDefinitions` is a representation of OpenAPI v2 specification&#39;s
+Security Definitions object.
+
+See: https://github.com/OAI/OpenAPI-Specification/blob/3.0.0/versions/2.0.md#securityDefinitionsObject
+
+A declaration of the security schemes available to be used in the
+specification. This does not enforce the security schemes on the operations
+and only serves to provide the relevant details for each scheme.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| security | [SecurityDefinitions.SecurityEntry](#grpc.gateway.protoc_gen_swagger.options.SecurityDefinitions.SecurityEntry) | repeated | A single security scheme definition, mapping a &#34;name&#34; to the scheme it defines. |
+
+
+
+
+
+
+<a name="grpc.gateway.protoc_gen_swagger.options.SecurityDefinitions.SecurityEntry"/>
+
+### SecurityDefinitions.SecurityEntry
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [string](#string) |  |  |
+| value | [SecurityScheme](#grpc.gateway.protoc_gen_swagger.options.SecurityScheme) |  |  |
+
+
+
+
+
+
+<a name="grpc.gateway.protoc_gen_swagger.options.SecurityRequirement"/>
+
+### SecurityRequirement
+`SecurityRequirement` is a representation of OpenAPI v2 specification&#39;s
+Security Requirement object.
+
+See: https://github.com/OAI/OpenAPI-Specification/blob/3.0.0/versions/2.0.md#securityRequirementObject
+
+Lists the required security schemes to execute this operation. The object can
+have multiple security schemes declared in it which are all required (that
+is, there is a logical AND between the schemes).
+
+The name used for each property MUST correspond to a security scheme
+declared in the Security Definitions.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| security_requirement | [SecurityRequirement.SecurityRequirementEntry](#grpc.gateway.protoc_gen_swagger.options.SecurityRequirement.SecurityRequirementEntry) | repeated | Each name must correspond to a security scheme which is declared in the Security Definitions. If the security scheme is of type &#34;oauth2&#34;, then the value is a list of scope names required for the execution. For other security scheme types, the array MUST be empty. |
+
+
+
+
+
+
+<a name="grpc.gateway.protoc_gen_swagger.options.SecurityRequirement.SecurityRequirementEntry"/>
+
+### SecurityRequirement.SecurityRequirementEntry
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [string](#string) |  |  |
+| value | [SecurityRequirement.SecurityRequirementValue](#grpc.gateway.protoc_gen_swagger.options.SecurityRequirement.SecurityRequirementValue) |  |  |
+
+
+
+
+
+
+<a name="grpc.gateway.protoc_gen_swagger.options.SecurityRequirement.SecurityRequirementValue"/>
+
+### SecurityRequirement.SecurityRequirementValue
+If the security scheme is of type &#34;oauth2&#34;, then the value is a list of
+scope names required for the execution. For other security scheme types,
+the array MUST be empty.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| scope | [string](#string) | repeated |  |
+
+
+
+
+
+
+<a name="grpc.gateway.protoc_gen_swagger.options.SecurityScheme"/>
+
+### SecurityScheme
+`SecurityScheme` is a representation of OpenAPI v2 specification&#39;s
+Security Scheme object.
+
+See: https://github.com/OAI/OpenAPI-Specification/blob/3.0.0/versions/2.0.md#securitySchemeObject
+
+Allows the definition of a security scheme that can be used by the
+operations. Supported schemes are basic authentication, an API key (either as
+a header or as a query parameter) and OAuth2&#39;s common flows (implicit,
+password, application and access code).
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| type | [SecurityScheme.Type](#grpc.gateway.protoc_gen_swagger.options.SecurityScheme.Type) |  | Required. The type of the security scheme. Valid values are &#34;basic&#34;, &#34;apiKey&#34; or &#34;oauth2&#34;. |
+| description | [string](#string) |  | A short description for security scheme. |
+| name | [string](#string) |  | Required. The name of the header or query parameter to be used.
+
+Valid for apiKey. |
+| in | [SecurityScheme.In](#grpc.gateway.protoc_gen_swagger.options.SecurityScheme.In) |  | Required. The location of the API key. Valid values are &#34;query&#34; or &#34;header&#34;.
+
+Valid for apiKey. |
+| flow | [SecurityScheme.Flow](#grpc.gateway.protoc_gen_swagger.options.SecurityScheme.Flow) |  | Required. The flow used by the OAuth2 security scheme. Valid values are &#34;implicit&#34;, &#34;password&#34;, &#34;application&#34; or &#34;accessCode&#34;.
+
+Valid for oauth2. |
+| authorization_url | [string](#string) |  | Required. The authorization URL to be used for this flow. This SHOULD be in the form of a URL.
+
+Valid for oauth2/implicit and oauth2/accessCode. |
+| token_url | [string](#string) |  | Required. The token URL to be used for this flow. This SHOULD be in the form of a URL.
+
+Valid for oauth2/password, oauth2/application and oauth2/accessCode. |
+| scopes | [Scopes](#grpc.gateway.protoc_gen_swagger.options.Scopes) |  | Required. The available scopes for the OAuth2 security scheme.
+
+Valid for oauth2. |
+
+
+
+
+
+
 <a name="grpc.gateway.protoc_gen_swagger.options.Swagger"/>
 
 ### Swagger
@@ -390,6 +575,8 @@ TODO(ivucica): document fields
 | schemes | [Swagger.SwaggerScheme](#grpc.gateway.protoc_gen_swagger.options.Swagger.SwaggerScheme) | repeated |  |
 | consumes | [string](#string) | repeated |  |
 | produces | [string](#string) | repeated |  |
+| security_definitions | [SecurityDefinitions](#grpc.gateway.protoc_gen_swagger.options.SecurityDefinitions) |  |  |
+| security | [SecurityRequirement](#grpc.gateway.protoc_gen_swagger.options.SecurityRequirement) | repeated |  |
 | external_docs | [ExternalDocumentation](#grpc.gateway.protoc_gen_swagger.options.ExternalDocumentation) |  |  |
 
 
@@ -434,6 +621,50 @@ TODO(ivucica): document fields
 | NUMBER | 5 |  |
 | OBJECT | 6 |  |
 | STRING | 7 |  |
+
+
+
+<a name="grpc.gateway.protoc_gen_swagger.options.SecurityScheme.Flow"/>
+
+### SecurityScheme.Flow
+Required. The flow used by the OAuth2 security scheme. Valid values are
+&#34;implicit&#34;, &#34;password&#34;, &#34;application&#34; or &#34;accessCode&#34;.
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| FLOW_INVALID | 0 |  |
+| FLOW_IMPLICIT | 1 |  |
+| FLOW_PASSWORD | 2 |  |
+| FLOW_APPLICATION | 3 |  |
+| FLOW_ACCESS_CODE | 4 |  |
+
+
+
+<a name="grpc.gateway.protoc_gen_swagger.options.SecurityScheme.In"/>
+
+### SecurityScheme.In
+Required. The location of the API key. Valid values are &#34;query&#34; or &#34;header&#34;.
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| IN_INVALID | 0 |  |
+| IN_QUERY | 1 |  |
+| IN_HEADER | 2 |  |
+
+
+
+<a name="grpc.gateway.protoc_gen_swagger.options.SecurityScheme.Type"/>
+
+### SecurityScheme.Type
+Required. The type of the security scheme. Valid values are &#34;basic&#34;,
+&#34;apiKey&#34; or &#34;oauth2&#34;.
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| TYPE_INVALID | 0 |  |
+| TYPE_BASIC | 1 |  |
+| TYPE_API_KEY | 2 |  |
+| TYPE_OAUTH2 | 3 |  |
 
 
 

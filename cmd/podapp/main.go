@@ -5,7 +5,6 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 
 	"fmt"
 
@@ -15,6 +14,7 @@ import (
 	"github.com/spf13/viper"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
+	"github.com/alejandroEsc/k8s-controller-example/internal/podServer"
 )
 
 // Code for pod app (grpc server)
@@ -67,18 +67,18 @@ func start(gracefulStop chan os.Signal, port int, address string) error {
 	var opts []grpc.ServerOption
 
 	grpcServer := grpc.NewServer(opts...)
-	podapi.RegisterPodMessagingServiceServer(grpcServer, newPodServer())
+	service := podServer.NewPodServer(true, viper.GetString("id"))
+	podapi.RegisterPodMessagingServiceServer(grpcServer, service)
 
-	logger.Infof("attempting to start server in port %d", port)
+	logger.Infof("starting on %s:%d", address, port)
 
 	// Chance here to gracefully handle being stopped.
 	go func() {
 		sig := <-gracefulStop
 		logger.Infof("caught sig: %+v", sig)
-		logger.Infof("Wait for 2 second to finish processing")
-		time.Sleep(2 * time.Second)
+		cleanup()
 		grpcServer.Stop()
-		logger.Infof("service terminated")
+		logger.Infof("...service terminated")
 		os.Exit(0)
 	}()
 
@@ -88,4 +88,8 @@ func start(gracefulStop chan os.Signal, port int, address string) error {
 	}
 
 	return nil
+}
+
+func cleanup(){
+	logger.Infof("...cleaning up.")
 }
