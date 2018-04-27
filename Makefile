@@ -24,6 +24,12 @@ go-clean:
 	./scripts/clean/gofmt-clean.sh
 	./scripts/clean/goimports-clean.sh
 
+update-codegen:
+	./scripts/update-codegen.sh
+
+generate-pod-apis:
+	./scripts/gen_pod_apis.sh
+
 
 .PHONY: install-tools
 install-tools:
@@ -36,6 +42,12 @@ endif
 ifndef GOLINT_CMD
 	go get github.com/golang/lint/golint
 endif
+
+	GOCYCLO_CMD=$(shell command -v gocyclo 2> /dev/null)
+ifndef GOLINT_CMD
+	go get github.com/fzipp/gocyclo
+endif
+
 
 .PHONY: help
 help:  ## Show help messages for make targets

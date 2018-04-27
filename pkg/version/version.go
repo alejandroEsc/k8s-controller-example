@@ -33,7 +33,7 @@ var (
 	appVersion = "master"
 )
 
-// Version represents Kubicorn version.
+// Version represents application version.
 type Version struct {
 	Version   string
 	GitCommit string
@@ -43,7 +43,7 @@ type Version struct {
 	GOArch    string
 }
 
-// GetVersion returns Kubicorn version.
+// GetVersion returns application version.
 func GetVersion() *Version {
 	return &Version{
 		Version:   appVersion,

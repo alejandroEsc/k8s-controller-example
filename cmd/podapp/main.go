@@ -23,7 +23,7 @@ import (
 func Init() {
 	viper.AutomaticEnv()
 	viper.SetEnvPrefix("pod_server")
-	viper.BindEnv("server_id")
+	viper.BindEnv("id")
 	viper.BindEnv("port")
 	viper.BindEnv("address")
 
