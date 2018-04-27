@@ -2,6 +2,6 @@ package util
 
 import "github.com/juju/loggo"
 
-var(
+var (
 	logger = GetModuleLogger("internal.util", loggo.INFO)
 )

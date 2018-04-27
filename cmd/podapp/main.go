@@ -1,19 +1,20 @@
 package main
 
 import (
+	"net"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
-	"net"
+
+	"fmt"
 
 	podapi "github.com/alejandroEsc/k8s-controller-example/api"
-	"github.com/alejandroEsc/k8s-controller-example/internal/util"
+	"github.com/alejandroEsc/k8s-controller-example/pkg/util"
 	"github.com/juju/loggo"
 	"github.com/spf13/viper"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
-	"fmt"
 )
 
 // Code for pod app (grpc server)
@@ -47,7 +48,6 @@ func main() {
 	// Handle SIGINT and SIGTERM.
 	gracefulStop := make(chan os.Signal)
 	signal.Notify(gracefulStop, syscall.SIGINT, syscall.SIGTERM)
-
 
 	if err := start(gracefulStop, port, address); err != nil {
 		logger.Criticalf("failed to start server: %s", err)

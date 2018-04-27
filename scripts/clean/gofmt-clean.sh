@@ -20,7 +20,7 @@ if [[ ! -x "${gofmt}" ]]; then
   exit 1
 fi
 
-source "${ROOT}/hack/common.sh"
+source "${ROOT}/scripts/common.sh"
 
 echo $(valid_go_files)
 for file in $(valid_go_files); do

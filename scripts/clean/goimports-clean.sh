@@ -11,7 +11,7 @@ set -o nounset
 set -o pipefail
 
 ROOT=$(dirname "${BASH_SOURCE}")/../..
-source "${ROOT}/hack/common.sh"
+source "${ROOT}/scripts/common.sh"
 
 cd "${ROOT}"
 

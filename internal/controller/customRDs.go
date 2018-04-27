@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"github.com/alejandroEsc/k8s-controller-example/internal/util"
+	"github.com/alejandroEsc/k8s-controller-example/pkg/util"
 	apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 )
 

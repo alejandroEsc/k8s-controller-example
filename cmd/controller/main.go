@@ -5,10 +5,10 @@ import (
 	"time"
 
 	c "github.com/alejandroEsc/k8s-controller-example/internal/controller"
-	"github.com/alejandroEsc/k8s-controller-example/internal/util"
 	clientset "github.com/alejandroEsc/k8s-controller-example/pkg/client/clientset/versioned"
 	informers "github.com/alejandroEsc/k8s-controller-example/pkg/client/informers/externalversions"
 	"github.com/alejandroEsc/k8s-controller-example/pkg/signals"
+	"github.com/alejandroEsc/k8s-controller-example/pkg/util"
 	"github.com/juju/loggo"
 	"github.com/spf13/viper"
 	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"

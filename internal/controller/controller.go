@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/alejandroEsc/k8s-controller-example/internal/util"
 	clientset "github.com/alejandroEsc/k8s-controller-example/pkg/client/clientset/versioned"
 	samplescheme "github.com/alejandroEsc/k8s-controller-example/pkg/client/clientset/versioned/scheme"
 	informers "github.com/alejandroEsc/k8s-controller-example/pkg/client/informers/externalversions"
 	listers "github.com/alejandroEsc/k8s-controller-example/pkg/client/listers/controller/v1alpha1"
+	"github.com/alejandroEsc/k8s-controller-example/pkg/util"
 	"github.com/juju/loggo"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
