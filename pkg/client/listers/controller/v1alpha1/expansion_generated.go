@@ -17,10 +17,10 @@ limitations under the License.
 
 package v1alpha1
 
-// ClusterCreatorListerExpansion allows custom methods to be added to
-// ClusterCreatorLister.
-type ClusterCreatorListerExpansion interface{}
+// SampleResourceListerExpansion allows custom methods to be added to
+// SampleResourceLister.
+type SampleResourceListerExpansion interface{}
 
-// ClusterCreatorNamespaceListerExpansion allows custom methods to be added to
-// ClusterCreatorNamespaceLister.
-type ClusterCreatorNamespaceListerExpansion interface{}
+// SampleResourceNamespaceListerExpansion allows custom methods to be added to
+// SampleResourceNamespaceLister.
+type SampleResourceNamespaceListerExpansion interface{}

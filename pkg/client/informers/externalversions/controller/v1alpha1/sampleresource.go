@@ -30,59 +30,59 @@ import (
 	cache "k8s.io/client-go/tools/cache"
 )
 
-// ClusterCreatorInformer provides access to a shared informer and lister for
-// ClusterCreators.
-type ClusterCreatorInformer interface {
+// SampleResourceInformer provides access to a shared informer and lister for
+// SampleResources.
+type SampleResourceInformer interface {
 	Informer() cache.SharedIndexInformer
-	Lister() v1alpha1.ClusterCreatorLister
+	Lister() v1alpha1.SampleResourceLister
 }
 
-type clusterCreatorInformer struct {
+type sampleResourceInformer struct {
 	factory          internalinterfaces.SharedInformerFactory
 	tweakListOptions internalinterfaces.TweakListOptionsFunc
 	namespace        string
 }
 
-// NewClusterCreatorInformer constructs a new informer for ClusterCreator type.
+// NewSampleResourceInformer constructs a new informer for SampleResource type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewClusterCreatorInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
-	return NewFilteredClusterCreatorInformer(client, namespace, resyncPeriod, indexers, nil)
+func NewSampleResourceInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
+	return NewFilteredSampleResourceInformer(client, namespace, resyncPeriod, indexers, nil)
 }
 
-// NewFilteredClusterCreatorInformer constructs a new informer for ClusterCreator type.
+// NewFilteredSampleResourceInformer constructs a new informer for SampleResource type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewFilteredClusterCreatorInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
+func NewFilteredSampleResourceInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{
 			ListFunc: func(options v1.ListOptions) (runtime.Object, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.ControllerV1alpha1().ClusterCreators(namespace).List(options)
+				return client.ControllerV1alpha1().SampleResources(namespace).List(options)
 			},
 			WatchFunc: func(options v1.ListOptions) (watch.Interface, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.ControllerV1alpha1().ClusterCreators(namespace).Watch(options)
+				return client.ControllerV1alpha1().SampleResources(namespace).Watch(options)
 			},
 		},
-		&controller_v1alpha1.ClusterCreator{},
+		&controller_v1alpha1.SampleResource{},
 		resyncPeriod,
 		indexers,
 	)
 }
 
-func (f *clusterCreatorInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
-	return NewFilteredClusterCreatorInformer(client, f.namespace, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
+func (f *sampleResourceInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
+	return NewFilteredSampleResourceInformer(client, f.namespace, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
 }
 
-func (f *clusterCreatorInformer) Informer() cache.SharedIndexInformer {
-	return f.factory.InformerFor(&controller_v1alpha1.ClusterCreator{}, f.defaultInformer)
+func (f *sampleResourceInformer) Informer() cache.SharedIndexInformer {
+	return f.factory.InformerFor(&controller_v1alpha1.SampleResource{}, f.defaultInformer)
 }
 
-func (f *clusterCreatorInformer) Lister() v1alpha1.ClusterCreatorLister {
-	return v1alpha1.NewClusterCreatorLister(f.Informer().GetIndexer())
+func (f *sampleResourceInformer) Lister() v1alpha1.SampleResourceLister {
+	return v1alpha1.NewSampleResourceLister(f.Informer().GetIndexer())
 }

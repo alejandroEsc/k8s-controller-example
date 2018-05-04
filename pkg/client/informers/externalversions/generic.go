@@ -52,8 +52,8 @@ func (f *genericInformer) Lister() cache.GenericLister {
 func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource) (GenericInformer, error) {
 	switch resource {
 	// Group=controller.alejandro.esc.com, Version=v1alpha1
-	case v1alpha1.SchemeGroupVersion.WithResource("clustercreators"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Controller().V1alpha1().ClusterCreators().Informer()}, nil
+	case v1alpha1.SchemeGroupVersion.WithResource("sampleresources"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Controller().V1alpha1().SampleResources().Informer()}, nil
 
 	}
 

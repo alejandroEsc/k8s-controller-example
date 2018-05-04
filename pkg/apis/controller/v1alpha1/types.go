@@ -7,31 +7,31 @@ import (
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// ClusterCreator is the spec for the ClusterCreator resource
-type ClusterCreator struct {
+// SampleResource is the spec for the controller
+type SampleResource struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   ClusterCreatorSpec   `json:"spec"`
-	Status ClusterCreatorStatus `json:"status"`
+	Spec   SampleResourceSpec   `json:"spec"`
+	Status SampleResourceStatus `json:"status"`
 }
 
-// ClusterCreatorSpec is the spec of the ClusterCreatorSpec
-type ClusterCreatorSpec struct {
-	ClusterName string `json:"clusterName"`
+// SampleResourceSpec is the spec of the SampleResourceSpec
+type SampleResourceSpec struct {
+	SampleResourceName string `json:"clusterName"`
 }
 
-// ClusterCreatorStatus is the status of the ClusterCreator resource
-type ClusterCreatorStatus struct {
+// SampleResourceStatus is the status of the SampleResource resource
+type SampleResourceStatus struct {
 	AvailableReplicas int32 `json:"availableReplicas"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// ClusterCreatorList is the list of ClusterCreator resources
-type ClusterCreatorList struct {
+// SampleResourceList is the list of SampleResources
+type SampleResourceList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata"`
 
-	Items []ClusterCreator `json:"items"`
+	Items []SampleResource `json:"items"`
 }

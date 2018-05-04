@@ -26,7 +26,7 @@ import (
 
 type ControllerV1alpha1Interface interface {
 	RESTClient() rest.Interface
-	ClusterCreatorsGetter
+	SampleResourcesGetter
 }
 
 // ControllerV1alpha1Client is used to interact with features provided by the controller.alejandro.esc.com group.
@@ -34,8 +34,8 @@ type ControllerV1alpha1Client struct {
 	restClient rest.Interface
 }
 
-func (c *ControllerV1alpha1Client) ClusterCreators(namespace string) ClusterCreatorInterface {
-	return newClusterCreators(c, namespace)
+func (c *ControllerV1alpha1Client) SampleResources(namespace string) SampleResourceInterface {
+	return newSampleResources(c, namespace)
 }
 
 // NewForConfig creates a new ControllerV1alpha1Client for the given config.

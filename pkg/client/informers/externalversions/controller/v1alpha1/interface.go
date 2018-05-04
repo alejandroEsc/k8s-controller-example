@@ -23,8 +23,8 @@ import (
 
 // Interface provides access to all the informers in this group version.
 type Interface interface {
-	// ClusterCreators returns a ClusterCreatorInformer.
-	ClusterCreators() ClusterCreatorInformer
+	// SampleResources returns a SampleResourceInformer.
+	SampleResources() SampleResourceInformer
 }
 
 type version struct {
@@ -38,7 +38,7 @@ func New(f internalinterfaces.SharedInformerFactory, namespace string, tweakList
 	return &version{factory: f, namespace: namespace, tweakListOptions: tweakListOptions}
 }
 
-// ClusterCreators returns a ClusterCreatorInformer.
-func (v *version) ClusterCreators() ClusterCreatorInformer {
-	return &clusterCreatorInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+// SampleResources returns a SampleResourceInformer.
+func (v *version) SampleResources() SampleResourceInformer {
+	return &sampleResourceInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }

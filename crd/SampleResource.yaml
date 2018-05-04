@@ -1,15 +1,15 @@
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-  name: clustercreators.alejandroesc.com
+  name: sampleresources.alejandroesc.com
 spec:
   group: alejandro.escobar.com
   version: v1alpha1
   scope: Namespaced
   names:
-    plural: clustercreators
-    singular: clustercreator
-    kind: ClusterCreator
+    plural: sampleresources
+    singular: sampleresource
+    kind: SampleResource
     shortnames:
       - cc
   subresources:

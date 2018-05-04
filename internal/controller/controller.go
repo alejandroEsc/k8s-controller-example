@@ -32,7 +32,7 @@ var (
 )
 
 const (
-	controllerAgentName = "controller"
+	controllerAgentName = "k8s-controller"
 	// SuccessSynced is used as part of the Event 'reason' when a Foo is synced
 	SuccessSynced = "Synced"
 	// ErrResourceExists is used as part of the Event 'reason' when a Foo fails
@@ -54,10 +54,10 @@ type Controller struct {
 	// sampleclientset is a clientset for our own API group
 	sampleclientset clientset.Interface
 	//
-	deploymentsLister     appslisters.DeploymentLister
-	deploymentsSynced     cache.InformerSynced
-	clusterCreatorsLister listers.ClusterCreatorLister
-	clusterCreatorsSynced cache.InformerSynced
+	deploymentsLister appslisters.DeploymentLister
+	deploymentsSynced cache.InformerSynced
+	controllerLister  listers.SampleResourceLister
+	controllerSynced  cache.InformerSynced
 
 	// workqueue is a rate limited work queue. This is used to queue work to be
 	// processed instead of performing it as soon as a change happens. This
@@ -80,7 +80,7 @@ func NewController(
 	// obtain references to shared index informers for the Deployment and Foo
 	// types.
 	deploymentInformer := kubeInformerFactory.Apps().V1().Deployments()
-	clusterCreatorInformer := sampleInformerFactory.Controller().V1alpha1().ClusterCreators()
+	sampleResourceInformer := sampleInformerFactory.Controller().V1alpha1().SampleResources()
 
 	// Create event broadcaster
 	// Add sample-controller types to the default Kubernetes Scheme so Events can be
@@ -93,19 +93,19 @@ func NewController(
 	recorder := eventBroadcaster.NewRecorder(scheme.Scheme, corev1.EventSource{Component: controllerAgentName})
 
 	controller := &Controller{
-		kubeclientset:         kubeclientset,
-		sampleclientset:       sampleclientset,
-		deploymentsLister:     deploymentInformer.Lister(),
-		deploymentsSynced:     deploymentInformer.Informer().HasSynced,
-		clusterCreatorsLister: clusterCreatorInformer.Lister(),
-		clusterCreatorsSynced: clusterCreatorInformer.Informer().HasSynced,
-		workqueue:             workqueue.NewNamedRateLimitingQueue(workqueue.DefaultControllerRateLimiter(), "Foos"),
-		recorder:              recorder,
+		kubeclientset:     kubeclientset,
+		sampleclientset:   sampleclientset,
+		deploymentsLister: deploymentInformer.Lister(),
+		deploymentsSynced: deploymentInformer.Informer().HasSynced,
+		controllerLister:  sampleResourceInformer.Lister(),
+		controllerSynced:  sampleResourceInformer.Informer().HasSynced,
+		workqueue:         workqueue.NewNamedRateLimitingQueue(workqueue.DefaultControllerRateLimiter(), "Foos"),
+		recorder:          recorder,
 	}
 
 	logger.Infof("Setting up event handlers")
 	// Set up an event handler for when Foo resources change
-	clusterCreatorInformer.Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
+	sampleResourceInformer.Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
 		AddFunc: controller.enqueueClusterCreator,
 		UpdateFunc: func(old, new interface{}) {
 			controller.enqueueClusterCreator(new)
@@ -144,11 +144,11 @@ func (c *Controller) Run(threadiness int, stopCh <-chan struct{}) error {
 	defer c.workqueue.ShutDown()
 
 	// Start the informer factories to begin populating the informer caches
-	logger.Infof("Starting Foo controller")
+	logger.Infof("Starting controller")
 
 	// Wait for the caches to be synced before starting workers
 	logger.Infof("Waiting for informer caches to sync")
-	if ok := cache.WaitForCacheSync(stopCh, c.deploymentsSynced, c.clusterCreatorsSynced); !ok {
+	if ok := cache.WaitForCacheSync(stopCh, c.deploymentsSynced, c.controllerSynced); !ok {
 		return fmt.Errorf("failed to wait for caches to sync")
 	}
 
@@ -275,7 +275,7 @@ func (c *Controller) handleObject(obj interface{}) {
 			return
 		}
 
-		foo, err := c.clusterCreatorsLister.ClusterCreators(object.GetNamespace()).Get(ownerRef.Name)
+		foo, err := c.controllerLister.SampleResources(object.GetNamespace()).Get(ownerRef.Name)
 		if err != nil {
 			logger.Infof("ignoring orphaned object '%s' of foo '%s'", object.GetSelfLink(), ownerRef.Name)
 			return

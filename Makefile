@@ -5,7 +5,7 @@ GOBUILD_POD_SERVER=go build -o bin/podapp -ldflags "-X github.com/alejandroEsc/k
 clean: ## clean build output
 	rm -rf bin/*
 
-compile-controller: # build controller and place in local bin directory
+compile-controller: ## build controller and place in local bin directory
 	${GOBUILD_CONTROLLER} ./cmd/controller
 
 compile-controller-linux: ## build linux version of the controller

@@ -15,11 +15,11 @@ func CreateControllerResource() *apiextensionsv1beta1.CustomResourceDefinition {
 	var validation *apiextensionsv1beta1.CustomResourceValidation
 
 	return util.NewCRD(
-		"controller.alejandroesc.com",
-		"SampleController",
-		"podcontroller",
-		"podcontrollers",
-		[]string{"cc"},
+		"sampleresources.alejandroesc.com",
+		"SampleResource",
+		"sampleresource",
+		"sampleResources",
+		[]string{"sr"},
 		&subResource,
 		validation)
 }

@@ -18,7 +18,7 @@ limitations under the License.
 package fake
 
 import (
-	v1alpha1 "github.com/alejandroEsc/k8s-controller-example/pkg/client/clientset/versioned/typed/controller/v1alpha1"
+	v1alpha1 "github.com/alejandroesc/k8s-controller-example/pkg/client/clientset/versioned/typed/controller/v1alpha1"
 	rest "k8s.io/client-go/rest"
 	testing "k8s.io/client-go/testing"
 )
@@ -27,8 +27,8 @@ type FakeControllerV1alpha1 struct {
 	*testing.Fake
 }
 
-func (c *FakeControllerV1alpha1) ClusterCreators(namespace string) v1alpha1.ClusterCreatorInterface {
-	return &FakeClusterCreators{c, namespace}
+func (c *FakeControllerV1alpha1) SampleResources(namespace string) v1alpha1.SampleResourceInterface {
+	return &FakeSampleResources{c, namespace}
 }
 
 // RESTClient returns a RESTClient that is used to communicate
